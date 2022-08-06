@@ -11,6 +11,7 @@ namespace YouTubeDownloader
 	{
 		public static YoutubeClient client;
 		public static YoutubeExplode.Videos.Video SelectedVideo;
+		private static string SavePath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
 		//public static YoutubeExplode.Videos.Streams.IStreamInfo streamInfo;
 		public Form1()
 		{
@@ -83,16 +84,18 @@ namespace YouTubeDownloader
 				DurationVideo.Location = ThumbnailBox.Location;
 			}
 		}
-
+		private static int fileCount = 0;
 		private async void button2_Click(object sender, EventArgs e)
 		{
-			DialogResult dialogResult = MessageBox.Show("Файл займет N места", "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+			DialogResult dialogResult = MessageBox.Show(SavePath, "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 			if (dialogResult == DialogResult.Yes)
 			{
 				var streamManifest = await client.Videos.Streams.GetManifestAsync(SelectedVideo.Id);
 				IStreamInfo StreamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
 				var stream = await client.Videos.Streams.GetAsync(StreamInfo);
-				await client.Videos.Streams.DownloadAsync(StreamInfo, /*$"video.{StreamInfo.Container}"*/ SelectedVideo.Title + "." + StreamInfo.Container);
+				await client.Videos.Streams.DownloadAsync(StreamInfo, SavePath + "\\video" + fileCount + "." + StreamInfo.Container);
+				fileCount++;
+				
 				MessageBox.Show("Download"); // TODO
 			}
 			else if (dialogResult == DialogResult.No)
