@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YoutubeExplode;
 using YoutubeExplode.Common;
+using YoutubeExplode.Videos.Streams;
 
 namespace YouTubeDownloader
 {
@@ -16,6 +11,7 @@ namespace YouTubeDownloader
 	{
 		public static YoutubeClient client;
 		public static YoutubeExplode.Videos.Video SelectedVideo;
+		//public static YoutubeExplode.Videos.Streams.IStreamInfo streamInfo;
 		public Form1()
 		{
 			InitializeComponent();
@@ -38,9 +34,15 @@ namespace YouTubeDownloader
 			{
 				var video = await client.Videos.GetAsync(textBox1.Text);
 				VideoTitle.Text = video.Title;
-				label1.Text = video.Description;
+				richTextBox1.Text = video.Description;
 				DurationVideo.Text = video.Duration.ToString();
 				SelectedVideo = video;
+				var thumbnail = video.Thumbnails[0];
+				string thumbnailUrl = thumbnail.Url.ToString().Split('?')[0];
+				ThumbnailBox.WaitOnLoad = false;
+				ThumbnailBox.LoadAsync(thumbnailUrl);
+				ThumbnailBox.Width = thumbnail.Resolution.Width * 2;
+				ThumbnailBox.Height = thumbnail.Resolution.Height * 2;
 				EnableLabels();
 			}
 			catch
@@ -52,9 +54,15 @@ namespace YouTubeDownloader
 					var video = await client.Videos.GetAsync(videos.ElementAt(0).Url);
 					MessageBox.Show("Поиск выполнен");
 					VideoTitle.Text = video.Title;
-					label1.Text = video.Description;
+					richTextBox1.Text = video.Description;
 					DurationVideo.Text = video.Duration.ToString();
 					SelectedVideo = video;
+					var thumbnail = video.Thumbnails[0];
+					string thumbnailUrl = thumbnail.Url.ToString().Split('?')[0];
+					ThumbnailBox.WaitOnLoad = false;
+					ThumbnailBox.LoadAsync(thumbnailUrl);
+					ThumbnailBox.Width = thumbnail.Resolution.Width * 2;
+					ThumbnailBox.Height = thumbnail.Resolution.Height * 2;
 					EnableLabels();
 				}
 				catch
@@ -66,18 +74,31 @@ namespace YouTubeDownloader
 			void EnableLabels()
 			{
 				VideoTitle.Visible = true;
-				label1.Visible = true;
 				DurationVideo.Visible = true;
-				if(SelectedVideo != null)
+				richTextBox1.Visible = true;
+				if (SelectedVideo != null)
 				{
 					button2.Enabled = true;
 				}
+				DurationVideo.Location = ThumbnailBox.Location;
 			}
 		}
 
-		private void button2_Click(object sender, EventArgs e)
+		private async void button2_Click(object sender, EventArgs e)
 		{
-
+			DialogResult dialogResult = MessageBox.Show("Файл займет N места", "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+			if (dialogResult == DialogResult.Yes)
+			{
+				var streamManifest = await client.Videos.Streams.GetManifestAsync(SelectedVideo.Id);
+				IStreamInfo StreamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+				var stream = await client.Videos.Streams.GetAsync(StreamInfo);
+				await client.Videos.Streams.DownloadAsync(StreamInfo, /*$"video.{StreamInfo.Container}"*/ SelectedVideo.Title + "." + StreamInfo.Container);
+				MessageBox.Show("Download"); // TODO
+			}
+			else if (dialogResult == DialogResult.No)
+			{
+				return;
+			}
 		}
 	}
 }
