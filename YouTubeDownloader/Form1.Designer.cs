@@ -118,7 +118,7 @@
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(197, 17);
 			this.label2.TabIndex = 6;
-			this.label2.Text = "@QsyAtmCode | v22.8.4";
+			this.label2.Text = "@QsyAtmCode | v22.8.6";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
 			// ThumbnailBox
@@ -156,7 +156,7 @@
 			this.Name = "Form1";
 			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "YouTube video Downloader v22.8.4";
+			this.Text = "YouTube video Downloader v22.8.6";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
