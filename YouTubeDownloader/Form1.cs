@@ -4,15 +4,23 @@ using System.Windows.Forms;
 using YoutubeExplode;
 using YoutubeExplode.Common;
 using YoutubeExplode.Videos.Streams;
+using System.Security.Cryptography;
 
 namespace YouTubeDownloader
 {
+	public enum SaveMode
+	{
+		Audio,
+		Video,
+		Mixed
+	}
 	public partial class Form1 : Form
 	{
 		public static YoutubeClient client;
 		public static YoutubeExplode.Videos.Video SelectedVideo;
-		private static string SavePath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-		//public static YoutubeExplode.Videos.Streams.IStreamInfo streamInfo;
+		public static string SavePath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+		public static SaveMode saveMode = SaveMode.Mixed;
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -87,7 +95,7 @@ namespace YouTubeDownloader
 		private static int fileCount = 0;
 		private async void button2_Click(object sender, EventArgs e)
 		{
-			DialogResult dialogResult = MessageBox.Show(SavePath, "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+			DialogResult dialogResult = MessageBox.Show(SavePath + " | " + saveMode, "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 			if (dialogResult == DialogResult.Yes)
 			{
 				var streamManifest = await client.Videos.Streams.GetManifestAsync(SelectedVideo.Id);
@@ -96,12 +104,35 @@ namespace YouTubeDownloader
 				await client.Videos.Streams.DownloadAsync(StreamInfo, SavePath + "\\video" + fileCount + "." + StreamInfo.Container);
 				fileCount++;
 				
-				MessageBox.Show("Download"); // TODO
+				MessageBox.Show(GenerateSavename()); // TODO
 			}
 			else if (dialogResult == DialogResult.No)
 			{
 				return;
 			}
+		}
+
+		private void settingsButton_Click(object sender, EventArgs e)
+		{
+			SettingsFormcs sf = new SettingsFormcs();
+			sf.Show();
+		}
+		private static string GenerateSavename()
+		{
+			string output = String.Empty;
+			int seed = 0;
+			using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+			{
+				var buffer = new byte[4];
+				rng.GetBytes(buffer);
+				seed = BitConverter.ToInt32(buffer, 0);
+			}
+			Random rnd = new Random(seed);
+			for(int i = 0; i <= 12; i++)
+			{
+				output += Convert.ToString(rnd.Next());
+			}
+			return output.Substring(output.Length - (output.Length - 12));
 		}
 	}
 }
