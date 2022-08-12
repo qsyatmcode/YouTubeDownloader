@@ -39,7 +39,7 @@ namespace YouTubeDownloader
 				MessageBox.Show("Please, enter the video's URL", "Attemption", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
-			try
+			try // Поиск по URL
 			{
 				var video = await client.Videos.GetAsync(textBox1.Text);
 				VideoTitle.Text = video.Title;
@@ -56,7 +56,7 @@ namespace YouTubeDownloader
 			}
 			catch
 			{
-				try
+				try // Поиск по названию
 				{
 					MessageBox.Show("Поиск по названию займёт время, пожалуйста, подождите", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					var videos = await client.Search.GetVideosAsync(textBox1.Text);
@@ -94,19 +94,27 @@ namespace YouTubeDownloader
 		}
 		private async void button2_Click(object sender, EventArgs e)
 		{
-			var streamManifest = await client.Videos.Streams.GetManifestAsync(SelectedVideo.Id);
-			IStreamInfo StreamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
-			var stream = await client.Videos.Streams.GetAsync(StreamInfo);
-			DialogResult dialogResult = MessageBox.Show($"Файл будет сохранен в каталоге: {SavePath}" + Environment.NewLine + $"Режим скачивания: {saveMode}" + Environment.NewLine + $"Размер файла составит: {StreamInfo.Size}", "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-			if (dialogResult == DialogResult.Yes)
+			try
 			{
-				await client.Videos.Streams.DownloadAsync(StreamInfo, SavePath + $"\\{GenerateSavename()}" + "." + StreamInfo.Container);
-				// НАДО СДЕЛАТЬ ПРОГРЕСС БАР ПРОЦЕССА ЗАГРУЗКИ
-				MessageBox.Show("Скачивание завершено!", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				var streamManifest = await client.Videos.Streams.GetManifestAsync(SelectedVideo.Id);
+				IStreamInfo StreamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+				var stream = await client.Videos.Streams.GetAsync(StreamInfo);
+				DialogResult dialogResult = MessageBox.Show($"Файл будет сохранен в каталоге: {SavePath}" + Environment.NewLine + $"Режим скачивания: {saveMode}" + Environment.NewLine + $"Размер файла составит: {StreamInfo.Size}", "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+				if (dialogResult == DialogResult.Yes)
+				{
+					await client.Videos.Streams.DownloadAsync(StreamInfo, SavePath + $"\\{GenerateSavename()}" + "." + StreamInfo.Container);
+					// НАДО СДЕЛАТЬ ПРОГРЕСС БАР ПРОЦЕССА ЗАГРУЗКИ
+					MessageBox.Show("Скачивание завершено!", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+				}
+				else if (dialogResult == DialogResult.No)
+				{
+					return;
+				}
 			}
-			else if (dialogResult == DialogResult.No)
+			catch
 			{
-				return;
+				MessageBox.Show("Не удалось начать скачивание видеоролика. Возможно вы пытаетесь скачать прямую транслацию", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
