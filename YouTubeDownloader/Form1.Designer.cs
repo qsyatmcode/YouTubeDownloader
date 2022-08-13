@@ -38,6 +38,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.ThumbnailBox = new System.Windows.Forms.PictureBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.loadingCircle1 = new MRG.Controls.UI.LoadingCircle();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ThumbnailBox)).BeginInit();
 			this.SuspendLayout();
@@ -68,6 +69,7 @@
 			// panel1
 			// 
 			this.panel1.BackColor = System.Drawing.SystemColors.ButtonShadow;
+			this.panel1.Controls.Add(this.loadingCircle1);
 			this.panel1.Controls.Add(this.settingsButton);
 			this.panel1.Controls.Add(this.button2);
 			this.panel1.Controls.Add(this.textBox1);
@@ -82,6 +84,7 @@
 			// 
 			this.settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.settingsButton.BackColor = System.Drawing.Color.DeepSkyBlue;
+			this.settingsButton.Enabled = false;
 			this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.settingsButton.Location = new System.Drawing.Point(1768, 7);
 			this.settingsButton.Name = "settingsButton";
@@ -131,9 +134,9 @@
 			this.label2.Font = new System.Drawing.Font("JetBrains Mono", 7.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.Location = new System.Drawing.Point(0, 711);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(197, 17);
+			this.label2.Size = new System.Drawing.Size(206, 17);
 			this.label2.TabIndex = 6;
-			this.label2.Text = "@QsyAtmCode | v22.8.6";
+			this.label2.Text = "@QsyAtmCode | v22.8.12";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
 			// ThumbnailBox
@@ -156,6 +159,22 @@
 			this.richTextBox1.Text = "";
 			this.richTextBox1.Visible = false;
 			// 
+			// loadingCircle1
+			// 
+			this.loadingCircle1.Active = true;
+			this.loadingCircle1.Color = System.Drawing.Color.Chartreuse;
+			this.loadingCircle1.InnerCircleRadius = 8;
+			this.loadingCircle1.Location = new System.Drawing.Point(12, 0);
+			this.loadingCircle1.Name = "loadingCircle1";
+			this.loadingCircle1.NumberSpoke = 10;
+			this.loadingCircle1.OuterCircleRadius = 9;
+			this.loadingCircle1.RotationSpeed = 50;
+			this.loadingCircle1.Size = new System.Drawing.Size(79, 51);
+			this.loadingCircle1.SpokeThickness = 4;
+			this.loadingCircle1.TabIndex = 9;
+			this.loadingCircle1.Text = "loadingCircle1";
+			this.loadingCircle1.Visible = false;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -171,7 +190,7 @@
 			this.Name = "Form1";
 			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "YouTube video Downloader v22.8.6";
+			this.Text = "YouTube video Downloader v22.8.12";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
@@ -192,6 +211,7 @@
 		private System.Windows.Forms.PictureBox ThumbnailBox;
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private System.Windows.Forms.Button settingsButton;
+		private MRG.Controls.UI.LoadingCircle loadingCircle1;
 	}
 }
 

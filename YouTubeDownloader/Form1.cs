@@ -39,6 +39,7 @@ namespace YouTubeDownloader
 				MessageBox.Show("Please, enter the video's URL", "Attemption", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
+			loadingCircle1.Visible = true;
 			try // Поиск по URL
 			{
 				var video = await client.Videos.GetAsync(textBox1.Text);
@@ -53,15 +54,15 @@ namespace YouTubeDownloader
 				ThumbnailBox.Width = thumbnail.Resolution.Width * 2;
 				ThumbnailBox.Height = thumbnail.Resolution.Height * 2;
 				EnableLabels();
-			}
-			catch
+				loadingCircle1.Visible = false;			
+			}catch
 			{
 				try // Поиск по названию
 				{
-					MessageBox.Show("Поиск по названию займёт время, пожалуйста, подождите", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					//MessageBox.Show("Поиск по названию займёт время, пожалуйста, подождите", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					var videos = await client.Search.GetVideosAsync(textBox1.Text);
 					var video = await client.Videos.GetAsync(videos.ElementAt(0).Url);
-					MessageBox.Show("Поиск выполнен");
+					//MessageBox.Show("Поиск выполнен");
 					VideoTitle.Text = video.Title;
 					richTextBox1.Text = video.Description;
 					DurationVideo.Text = video.Duration.ToString();
@@ -73,10 +74,12 @@ namespace YouTubeDownloader
 					ThumbnailBox.Width = thumbnail.Resolution.Width * 2;
 					ThumbnailBox.Height = thumbnail.Resolution.Height * 2;
 					EnableLabels();
+					loadingCircle1.Visible = false;
 				}
 				catch
 				{
 					MessageBox.Show("не удалось ничего найти :(", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					loadingCircle1.Visible = false;
 					return;
 				}
 			}
@@ -102,8 +105,9 @@ namespace YouTubeDownloader
 				DialogResult dialogResult = MessageBox.Show($"Файл будет сохранен в каталоге: {SavePath}" + Environment.NewLine + $"Режим скачивания: {saveMode}" + Environment.NewLine + $"Размер файла составит: {StreamInfo.Size}", "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 				if (dialogResult == DialogResult.Yes)
 				{
+					loadingCircle1.Visible = true;
 					await client.Videos.Streams.DownloadAsync(StreamInfo, SavePath + $"\\{GenerateSavename()}" + "." + StreamInfo.Container);
-					// НАДО СДЕЛАТЬ ПРОГРЕСС БАР ПРОЦЕССА ЗАГРУЗКИ
+					loadingCircle1.Visible = false;
 					MessageBox.Show("Скачивание завершено!", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				}
