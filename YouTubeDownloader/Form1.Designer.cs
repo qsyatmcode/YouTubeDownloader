@@ -31,6 +31,7 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.VideoTitle = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.loadingCircle1 = new MRG.Controls.UI.LoadingCircle();
 			this.settingsButton = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
@@ -38,7 +39,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.ThumbnailBox = new System.Windows.Forms.PictureBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-			this.loadingCircle1 = new MRG.Controls.UI.LoadingCircle();
+			this.label1 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ThumbnailBox)).BeginInit();
 			this.SuspendLayout();
@@ -47,11 +48,11 @@
 			// 
 			this.button1.BackColor = System.Drawing.Color.Silver;
 			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button1.Location = new System.Drawing.Point(580, 8);
+			this.button1.Location = new System.Drawing.Point(596, 8);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(111, 32);
 			this.button1.TabIndex = 1;
-			this.button1.Text = "Search";
+			this.button1.Text = "Искать";
 			this.button1.UseVisualStyleBackColor = false;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
@@ -59,7 +60,7 @@
 			// 
 			this.VideoTitle.AutoSize = true;
 			this.VideoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.VideoTitle.Location = new System.Drawing.Point(12, 291);
+			this.VideoTitle.Location = new System.Drawing.Point(12, 297);
 			this.VideoTitle.Name = "VideoTitle";
 			this.VideoTitle.Size = new System.Drawing.Size(59, 20);
 			this.VideoTitle.TabIndex = 2;
@@ -80,17 +81,33 @@
 			this.panel1.Size = new System.Drawing.Size(1900, 47);
 			this.panel1.TabIndex = 4;
 			// 
+			// loadingCircle1
+			// 
+			this.loadingCircle1.Active = true;
+			this.loadingCircle1.Color = System.Drawing.Color.Chartreuse;
+			this.loadingCircle1.InnerCircleRadius = 5;
+			this.loadingCircle1.Location = new System.Drawing.Point(12, 0);
+			this.loadingCircle1.Name = "loadingCircle1";
+			this.loadingCircle1.NumberSpoke = 12;
+			this.loadingCircle1.OuterCircleRadius = 11;
+			this.loadingCircle1.RotationSpeed = 50;
+			this.loadingCircle1.Size = new System.Drawing.Size(79, 51);
+			this.loadingCircle1.SpokeThickness = 2;
+			this.loadingCircle1.StylePreset = MRG.Controls.UI.LoadingCircle.StylePresets.MacOSX;
+			this.loadingCircle1.TabIndex = 9;
+			this.loadingCircle1.Text = "loadingCircle1";
+			this.loadingCircle1.Visible = false;
+			// 
 			// settingsButton
 			// 
 			this.settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.settingsButton.BackColor = System.Drawing.Color.DeepSkyBlue;
-			this.settingsButton.Enabled = false;
 			this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.settingsButton.Location = new System.Drawing.Point(1768, 7);
 			this.settingsButton.Name = "settingsButton";
 			this.settingsButton.Size = new System.Drawing.Size(105, 33);
 			this.settingsButton.TabIndex = 4;
-			this.settingsButton.Text = "Settings";
+			this.settingsButton.Text = "Параметры";
 			this.settingsButton.UseVisualStyleBackColor = false;
 			this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
 			// 
@@ -99,17 +116,17 @@
 			this.button2.BackColor = System.Drawing.Color.LimeGreen;
 			this.button2.Enabled = false;
 			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button2.Location = new System.Drawing.Point(697, 7);
+			this.button2.Location = new System.Drawing.Point(713, 7);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(129, 33);
 			this.button2.TabIndex = 3;
-			this.button2.Text = "Download this";
+			this.button2.Text = "Скачать";
 			this.button2.UseVisualStyleBackColor = false;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new System.Drawing.Point(110, 12);
+			this.textBox1.Location = new System.Drawing.Point(126, 12);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(451, 22);
 			this.textBox1.TabIndex = 2;
@@ -143,7 +160,7 @@
 			// 
 			this.ThumbnailBox.Location = new System.Drawing.Point(18, 65);
 			this.ThumbnailBox.Name = "ThumbnailBox";
-			this.ThumbnailBox.Size = new System.Drawing.Size(368, 200);
+			this.ThumbnailBox.Size = new System.Drawing.Size(338, 200);
 			this.ThumbnailBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.ThumbnailBox.TabIndex = 7;
 			this.ThumbnailBox.TabStop = false;
@@ -152,34 +169,30 @@
 			// 
 			this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.richTextBox1.Location = new System.Drawing.Point(16, 314);
+			this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
+			this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richTextBox1.Location = new System.Drawing.Point(16, 320);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.Size = new System.Drawing.Size(810, 394);
 			this.richTextBox1.TabIndex = 8;
 			this.richTextBox1.Text = "";
 			this.richTextBox1.Visible = false;
 			// 
-			// loadingCircle1
+			// label1
 			// 
-			this.loadingCircle1.Active = true;
-			this.loadingCircle1.Color = System.Drawing.Color.Chartreuse;
-			this.loadingCircle1.InnerCircleRadius = 8;
-			this.loadingCircle1.Location = new System.Drawing.Point(12, 0);
-			this.loadingCircle1.Name = "loadingCircle1";
-			this.loadingCircle1.NumberSpoke = 10;
-			this.loadingCircle1.OuterCircleRadius = 9;
-			this.loadingCircle1.RotationSpeed = 50;
-			this.loadingCircle1.Size = new System.Drawing.Size(79, 51);
-			this.loadingCircle1.SpokeThickness = 4;
-			this.loadingCircle1.TabIndex = 9;
-			this.loadingCircle1.Text = "loadingCircle1";
-			this.loadingCircle1.Visible = false;
+			this.label1.AutoSize = true;
+			this.label1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+			this.label1.Location = new System.Drawing.Point(832, 317);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(0, 16);
+			this.label1.TabIndex = 9;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1900, 728);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.VideoTitle);
 			this.Controls.Add(this.DurationVideo);
 			this.Controls.Add(this.richTextBox1);
@@ -212,6 +225,7 @@
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private System.Windows.Forms.Button settingsButton;
 		private MRG.Controls.UI.LoadingCircle loadingCircle1;
+		private System.Windows.Forms.Label label1;
 	}
 }
 

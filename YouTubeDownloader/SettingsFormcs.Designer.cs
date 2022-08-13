@@ -35,14 +35,15 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// button1
 			// 
 			this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.button1.Location = new System.Drawing.Point(0, 538);
+			this.button1.Location = new System.Drawing.Point(0, 530);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(592, 40);
+			this.button1.Size = new System.Drawing.Size(590, 40);
 			this.button1.TabIndex = 1;
 			this.button1.Text = "Apply";
 			this.button1.UseVisualStyleBackColor = true;
@@ -60,7 +61,7 @@
 			// 
 			this.button2.Location = new System.Drawing.Point(505, 39);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.Size = new System.Drawing.Size(67, 23);
 			this.button2.TabIndex = 3;
 			this.button2.Text = "Обзор..";
 			this.button2.UseVisualStyleBackColor = true;
@@ -78,7 +79,8 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(2, 100);
+			this.label2.Enabled = false;
+			this.label2.Location = new System.Drawing.Point(2, 98);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(132, 16);
 			this.label2.TabIndex = 6;
@@ -86,24 +88,39 @@
 			// 
 			// comboBox1
 			// 
+			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox1.Enabled = false;
 			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(140, 97);
+			this.comboBox1.Location = new System.Drawing.Point(140, 95);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(121, 24);
 			this.comboBox1.TabIndex = 7;
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.ForeColor = System.Drawing.Color.Gold;
+			this.checkBox1.Location = new System.Drawing.Point(251, 155);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(264, 20);
+			this.checkBox1.TabIndex = 8;
+			this.checkBox1.Text = "Наивысшее качество звука и видео";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
 			// SettingsFormcs
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(592, 578);
+			this.ClientSize = new System.Drawing.Size(590, 570);
 			this.ControlBox = false;
+			this.Controls.Add(this.button1);
+			this.Controls.Add(this.checkBox1);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.textBox1);
-			this.Controls.Add(this.button1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -125,5 +142,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.CheckBox checkBox1;
 	}
 }
