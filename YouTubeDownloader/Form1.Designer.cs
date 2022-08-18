@@ -37,9 +37,9 @@
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.DurationVideo = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.ThumbnailBox = new System.Windows.Forms.PictureBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.label1 = new System.Windows.Forms.Label();
+			this.ThumbnailBox = new System.Windows.Forms.PictureBox();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ThumbnailBox)).BeginInit();
 			this.SuspendLayout();
@@ -153,17 +153,8 @@
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(206, 17);
 			this.label2.TabIndex = 6;
-			this.label2.Text = "@QsyAtmCode | v22.8.12";
+			this.label2.Text = "@QsyAtmCode | v22.8.18";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-			// 
-			// ThumbnailBox
-			// 
-			this.ThumbnailBox.Location = new System.Drawing.Point(18, 65);
-			this.ThumbnailBox.Name = "ThumbnailBox";
-			this.ThumbnailBox.Size = new System.Drawing.Size(338, 200);
-			this.ThumbnailBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.ThumbnailBox.TabIndex = 7;
-			this.ThumbnailBox.TabStop = false;
 			// 
 			// richTextBox1
 			// 
@@ -187,6 +178,15 @@
 			this.label1.Size = new System.Drawing.Size(0, 16);
 			this.label1.TabIndex = 9;
 			// 
+			// ThumbnailBox
+			// 
+			this.ThumbnailBox.Location = new System.Drawing.Point(18, 65);
+			this.ThumbnailBox.Name = "ThumbnailBox";
+			this.ThumbnailBox.Size = new System.Drawing.Size(338, 200);
+			this.ThumbnailBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.ThumbnailBox.TabIndex = 7;
+			this.ThumbnailBox.TabStop = false;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -203,7 +203,7 @@
 			this.Name = "Form1";
 			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "YouTube video Downloader v22.8.12";
+			this.Text = "YouTube video Downloader v22.8.18";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();

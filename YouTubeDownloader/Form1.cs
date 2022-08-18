@@ -144,6 +144,58 @@ namespace YouTubeDownloader
 					return;
 				}
 			}
+			if (saveMode == SaveMode.Audio)
+			{
+				try
+				{
+					loadingCircle1.Visible = true;
+					var streamInfo = streamManifest.GetAudioStreams().GetWithHighestBitrate();
+					loadingCircle1.Visible = false;
+					DialogResult dialogResult = MessageBox.Show($"Файл будет сохранен в каталоге: {SavePath}" + Environment.NewLine + $"Режим скачивания: {saveMode} | {streamInfo.Bitrate}" + Environment.NewLine + $"Размер файла составит: {streamInfo.Size}", "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					if (dialogResult == DialogResult.Yes)
+					{
+						loadingCircle1.Visible = true;
+						await client.Videos.Streams.DownloadAsync(streamInfo, SavePath + $"\\{GenerateSavename()}" + ".mp3"/* + streamInfo.Container*/);
+						loadingCircle1.Visible = false;
+						MessageBox.Show("Скачивание завершено!", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+					else if (dialogResult == DialogResult.No)
+					{
+						return;
+					}
+				}
+				catch
+				{
+					MessageBox.Show("Не удалось начать скачивание аудиопотока. Возможно вы пытаетесь скачать прямую транслацию", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				return;
+			}
+			if (saveMode == SaveMode.Video)
+			{
+				try
+				{
+					loadingCircle1.Visible = true;
+					var streamInfo = streamManifest.GetVideoStreams().GetWithHighestVideoQuality();
+					loadingCircle1.Visible = false;
+					DialogResult dialogResult = MessageBox.Show($"Файл будет сохранен в каталоге: {SavePath}" + Environment.NewLine + $"Режим скачивания: {saveMode} | {streamInfo.VideoQuality.Label}" + Environment.NewLine + $"Размер файла составит: {streamInfo.Size}", "Подтвердите действие", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					if (dialogResult == DialogResult.Yes)
+					{
+						loadingCircle1.Visible = true;
+						await client.Videos.Streams.DownloadAsync(streamInfo, SavePath + $"\\{GenerateSavename()}" + ".mp4"/* + streamInfo.Container*/);
+						loadingCircle1.Visible = false;
+						MessageBox.Show("Скачивание завершено!", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+					else if (dialogResult == DialogResult.No)
+					{
+						return;
+					}
+				}
+				catch
+				{
+					MessageBox.Show("Не удалось начать скачивание видеопотока. Возможно вы пытаетесь скачать прямую транслацию", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				return;
+			}
 			try
 			{
 				loadingCircle1.Visible = true;
